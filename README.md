@@ -1,4 +1,4 @@
-# Deep Learnig for 2D Grapevine Bud Detection
+# Deep Learning for 2D Grapevine Bud Detection
 
 Pre-print available at: https://arxiv.org/abs/2008.11872
 
