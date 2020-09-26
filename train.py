@@ -57,7 +57,7 @@ def train(epochs, lr, bs, savemodel, csv, imgpath):
         model_name = "{}-{}s_fcn_mn".format(timestamp, arch)
 
         if savemodel:
-            model.save(out_models, model_name + '.h5'))
+            model.save(out_models, model_name + '.h5')
 
         history_csv = pd.DataFrame(train_history.history)
         history_csv.to_csv(os.path.join(out_history, model_name +'.csv'))
