@@ -9,7 +9,7 @@ import re
 
 @click.command()
 @click.option('--model', required=True, help='Model name in output/models folder e.g model.h5')
-@click.option('--output', default=os.path.join('.','output', 'validationes'), help='Path to which the generated masks are written')
+@click.option('--output', default=os.path.join('.','output', 'validation'), help='Path to which the generated masks are written')
 @click.option('--csv', default="./test.csv", help='Test set csv with (image, mask) tuples')
 def inference(model, output, csv):
     np.random.seed(0)

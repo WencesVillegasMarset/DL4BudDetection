@@ -13,17 +13,19 @@ from datetime import datetime
 @click.option('--bs', default=4, help='Batch size')
 @click.option('--savemodel', default=True, is_flag=True, help='Save to trained model weights')
 @click.option('--csv', default="./train.csv", help='Training set csv with (image, mask) tuples')
-def train(epochs, lr, bs, savemodel, csv):
+@click.option('--imgpath', default="./images", help='Base images path')
+def train(epochs, lr, bs, savemodel, csv, imgpath):
     np.random.seed(0)
     train_set_full = pd.read_csv(csv)
     list_ids = list(train_set_full['image'].values)
     list_masks = list(train_set_full['mask'].values)
     # get root directories
-    img_path = os.path.split(list_ids[0])[0]
-    mask_path = os.path.split(list_masks[0])[0]
+    base_img_path = imgpath
+    img_path = os.path.join(base_img_path, "images")
+    mask_path = os.path.join(base_img_path, "masks")
 
-    list_ids = [os.path.basename(img) for img in list_ids]
-    list_masks = [os.path.basename(mask) for mask in list_masks]
+    list_ids = list_ids
+    list_masks = list_masks
     labels = dict(zip(list_ids, list_masks))
 
     out_models = os.path.join('.','output', 'models')
