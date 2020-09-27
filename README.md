@@ -31,5 +31,6 @@ bash:~$ python train.py --epochs 200 --lr 0.0001 --bs 4 --savemodel --csv train.
 * Run inference scripts for a desired model, generating prediction masks for each threshold and optionally (--valid flag) generating a csv component report (call shows sample values, --model must be specified)
 
 ```console
-bash:~$ python inference.py --model FCMN8rmsprop_lr0.0001_prep_keras_dp0.001_ep200.h5 --output ./output/validation/ --csv test.csv --imgpath ./images --valid
+bash:~$ python inference.py --model FCMN8rmsprop_lr0.0001_prep_keras_dp0.001_ep200.h5 \ 
+--output ./output/validation/ --csv test.csv --imgpath ./images --valid
 ```
