@@ -5,6 +5,7 @@ import os.path as path
 import cv2
 from keras.preprocessing import image
 from keras.applications.mobilenet import preprocess_input
+from keras.preprocessing.image import ImageDataGenerator
 
 class DataGeneratorMobileNetKeras(Sequence):
     def __init__(self, list_IDs, labels, batch_size=1, dim=None,dim_label=None, n_channels=3,
@@ -21,6 +22,10 @@ class DataGeneratorMobileNetKeras(Sequence):
                 self.img_path = img_path
                 self.mask_path = mask_path
                 self.augmentation = augmentation
+                self.image_gen = ImageDataGenerator(rotation_range=45., width_shift_range=0.4, height_shift_range=0.4,
+                                                    shear_range=0.1, zoom_range=0.3, horizontal_flip=True, vertical_flip=True,
+                                                    fill_mode='constant', cval=0, dtype=np.float64)
+
     def on_epoch_end(self):
         self.indexes = np.arange(len(self.list_IDs))
         if self.shuffle == True:
