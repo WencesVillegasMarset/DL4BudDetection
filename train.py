@@ -6,6 +6,7 @@ from utils import DataGeneratorMobileNetKeras
 from keras.optimizers import RMSprop
 from models import mobilenet_8s, mobilenet_16s, mobilenet_32s
 from datetime import datetime
+import gdown
 
 @click.command()
 @click.option('--epochs', default=1, help='Number of epochs')
@@ -35,32 +36,37 @@ def train(epochs, lr, bs, savemodel, csv, imgpath):
     if not os.path.exists(out_history):
         os.makedirs(out_history) 
 
+    if not os.path.exists(os.path.join("mn_classification_weights.h5")):
+        url = 'https://drive.google.com/uc?id=1Kzy257D9HgV9MQHEk1SCbBBvAR477stH'
+        output = 'mn_classification_weights.h5'
+        gdown.download(url, output, quiet=False)
+
     for arch in [8, 16, 32]:
         print(f"Starting FCN-MN {arch}s training")
-        if arch == 8:
-            model = mobilenet_8s(train_encoder=True, final_layer_activation="sigmoid", prep=True)
-        if arch == 16:
-            model = mobilenet_16s(train_encoder=True, final_layer_activation="sigmoid", prep=True)
-        else:
-            model = mobilenet_32s(train_encoder=True, final_layer_activation="sigmoid", prep=True)
+        # if arch == 8:
+        #     model = mobilenet_8s(train_encoder=True, final_layer_activation="sigmoid", prep=True)
+        # if arch == 16:
+        #     model = mobilenet_16s(train_encoder=True, final_layer_activation="sigmoid", prep=True)
+        # else:
+        #     model = mobilenet_32s(train_encoder=True, final_layer_activation="sigmoid", prep=True)
 
-        train_generator = DataGeneratorMobileNetKeras(batch_size=bs, img_path=img_path,
-                                        labels=labels, list_IDs=list_ids, n_channels=3,
-                                        n_channels_label=1, shuffle=True, mask_path=mask_path)
+        # train_generator = DataGeneratorMobileNetKeras(batch_size=bs, img_path=img_path,
+        #                                 labels=labels, list_IDs=list_ids, n_channels=3,
+        #                                 n_channels_label=1, shuffle=True, mask_path=mask_path)
 
-        model.compile(loss='binary_crossentropy', optimizer=RMSprop(), metrics=['accuracy'])
+        # model.compile(loss='binary_crossentropy', optimizer=RMSprop(), metrics=['accuracy'])
 
-        train_history = model.fit_generator(generator=train_generator, use_multiprocessing=True, epochs=epochs)
+        # train_history = model.fit_generator(generator=train_generator, use_multiprocessing=True, epochs=epochs)
 
-        timestamp = str(datetime.now().strftime("%Y%m%d_%H-%M-%S"))
+        # timestamp = str(datetime.now().strftime("%Y%m%d_%H-%M-%S"))
 
-        model_name = "{}-{}s_fcn_mn".format(timestamp, arch)
+        # model_name = "{}-{}s_fcn_mn".format(timestamp, arch)
 
-        if savemodel:
-            model.save(out_models, model_name + '.h5')
+        # if savemodel:
+        #     model.save(out_models, model_name + '.h5')
 
-        history_csv = pd.DataFrame(train_history.history)
-        history_csv.to_csv(os.path.join(out_history, model_name +'.csv'))
+        # history_csv = pd.DataFrame(train_history.history)
+        # history_csv.to_csv(os.path.join(out_history, model_name +'.csv'))
 
 
 if __name__ == '__main__':
