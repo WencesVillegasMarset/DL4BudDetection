@@ -115,3 +115,5 @@ output/validation/
 .vscode/
 
 mn_classification_weights.h5
+
+*.zip

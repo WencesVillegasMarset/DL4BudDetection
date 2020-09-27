@@ -52,7 +52,7 @@ def connected_components_with_threshold(image, threshold, ground_truth):
 @click.option('--output', default=os.path.join('.','output', 'validation'), help='Path to which the generated masks are written')
 @click.option('--csv', default=os.path.join(".", "test.csv"), help='Test set csv with (image, mask) tuples')
 @click.option('--imgpath', default=os.path.join(".", "images"), help='Base images path')
-@click.option('--valid', default=True, is_flag=True, help='Generate validation csv or not')
+@click.option('--valid', default=False, is_flag=True, help='Generate validation csv or not')
 def inference(model, output, csv, imgpath, valid):
     np.random.seed(0)
     test_set_full = pd.read_csv(csv)
@@ -139,7 +139,7 @@ def inference(model, output, csv, imgpath, valid):
                             np.subtract(gt_center, component_center))
 
                         data['mask_name'] = test_images[i]
-
+                        data['threshold'] = str(threshold)
                         data['mask_x'] = gt_center[0, 0]
                         data['mask_y'] = gt_center[0, 1]
                         # component_x
@@ -166,6 +166,7 @@ def inference(model, output, csv, imgpath, valid):
 
                 else:  # no buds detected register it in the metrics dict
                     data['mask_name'] = test_images[i]
+                    data['threshold'] = str(threshold)
                     data['mask_x'] = gt_center[0, 0]
                     data['mask_y'] = gt_center[0, 1]
                     # mass assing np.nan to nan-able keys
@@ -174,8 +175,9 @@ def inference(model, output, csv, imgpath, valid):
                 valid_list.append(data)
 
     print(model + ' images generated!')
-    csv = pd.DataFrame(valid_list)
-    csv.to_csv(os.path.join(output, model[:-3] +'.csv'))
+    if valid:
+        csv = pd.DataFrame(valid_list)
+        csv.to_csv(os.path.join(output, model[:-3] +'.csv'))
 
 
 if __name__ == "__main__":
