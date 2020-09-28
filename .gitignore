@@ -117,3 +117,5 @@ output/validation/
 mn_classification_weights.h5
 
 *.zip
+
+figures/plots/
