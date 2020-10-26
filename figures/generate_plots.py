@@ -140,12 +140,12 @@ def get_split_distribution_barplot(data, models=None):
         edgecolor="black",
         linewidth=1.5,
     )
-    plt.xlabel("Number of Split Cases")
+    plt.xlabel("Number of Split Components")
     plt.ylabel("Proportion")
     plt.ylim((0, 1))
     plt.xticks(rotation=30)
     plt.legend(title="Models", frameon=True)
-    plt.title("Number of Split Cases for FCN-MN and Sliding Windows")
+    plt.title("Number of Split Components for FCN-MN and Sliding Windows")
     plt.tight_layout()
     plt.savefig(os.path.join(FIGURES_PATH, "Figure4.png"), dpi=250)
 
@@ -203,7 +203,7 @@ bins = np.linspace(0, 60, 13).astype(int)
 plt.xticks(bins, bins)
 plt.xlabel("Mean Normalized Area ")
 plt.ylabel("Normalized Count")
-plt.title("Mean Normalized Area of False Alarm Cases")
+plt.title("Mean Normalized Area of False Alarm Components")
 plt.savefig(os.path.join(FIGURES_PATH, "Figure6.png"), dpi=250)
 plt.clf()
 
@@ -255,7 +255,7 @@ plt.xlabel("Mean Normalized Distance")
 plt.ylabel("Normalized Count")
 plt.ylim((0, 1))
 plt.tight_layout()
-plt.title("Mean Normalized Distance of False Alarm Cases")
+plt.title("Mean Normalized Distance of False Alarm Components")
 plt.savefig(os.path.join(FIGURES_PATH, "Figure7.png"), dpi=250)
 
 plt.clf()
@@ -314,7 +314,7 @@ plt.errorbar(
     color="white",
 )
 
-plt.title("Mean Segmentation Precision vs Recall for True Positive Models")
+plt.title("Mean Segmentation Precision vs Recall for True Positive Components")
 plt.xlabel("Mean Segmentation Recall")
 plt.ylabel("Mean Segmentation Precision")
 plt.xlim((0, 1))
@@ -377,7 +377,7 @@ plt.errorbar(
     color="white",
 )
 
-plt.title("Mean Segmentation Precision vs Recall for Split Models")
+plt.title("Mean Segmentation Precision vs Recall for Split Components")
 plt.xlabel("Mean Segmentation Recall")
 plt.ylabel("Mean Segmentation Precision")
 plt.xlim((0, 1))
